@@ -1,112 +1,133 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow strict-local
- */
+import {View, Text, ScrollView, TouchableOpacity} from 'react-native';
+import React, {useState, useRef} from 'react';
 
-import React from 'react';
-import type {Node} from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
+const App = () => {
+  const [offsetState, setOffSetState] = useState('');
+  const count = useRef(null);
+  console.log('offsetState', offsetState);
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+  const handleBtn = () => {
+    count.current?.scrollTo({
+      y: 400,
+      animated: true,
+    });
+  };
 
-const Section = ({children, title}): Node => {
-  const isDarkMode = useColorScheme() === 'dark';
-  return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
-};
+  const handleTwo = () => {
+    count.current?.scrollTo({
+      y: 800,
+      animated: true,
+    });
+  };
 
-const App: () => Node = () => {
-  const isDarkMode = useColorScheme() === 'dark';
+  const handleThree = () => {
+    count.current?.scrollTo({
+      y: 1300,
+      animated: true,
+    });
+  };
 
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
+  const handleOne = () => {
+    count.current?.scrollTo({
+      y: 0,
+      animated: true,
+    });
   };
 
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
+    <View>
+      <View
+        style={{
+          marginTop: 5,
+          flexDirection: 'row',
+          justifyContent: 'space-around',
+        }}>
+        <TouchableOpacity
+          onPress={handleOne}
           style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
+            backgroundColor:
+              Number(offsetState) >= 0 &&
+              Number(offsetState) < 293.3333435058594
+                ? 'white'
+                : 'red',
+            width: 80,
+            height: 50,
+          }}
+        />
+        <TouchableOpacity
+          onPress={handleBtn}
+          style={{
+            backgroundColor:
+              Number(offsetState) >= 293.3333435058594 &&
+              Number(offsetState) < 435.80950927734375
+                ? 'white'
+                : 'red',
+            width: 80,
+            height: 50,
+          }}
+        />
+        <TouchableOpacity
+          onPress={handleTwo}
+          style={{
+            backgroundColor:
+              Number(offsetState) >= 689.90478515625 &&
+              Number(offsetState) < 834.2857055664062
+                ? 'white'
+                : 'red',
+            width: 80,
+            height: 50,
+          }}
+        />
+        <TouchableOpacity
+          onPress={handleThree}
+          style={{
+            backgroundColor:
+              Number(offsetState) >= 1075.4285888671875 &&
+              Number(offsetState) < 1300.5714111328125
+                ? 'white'
+                : 'red',
+            width: 80,
+            height: 50,
+          }}
+        />
+      </View>
+      <View style={{paddingHorizontal: 20}}>
+        <Text style={{textAlign: 'center'}}>BLOC</Text>
+        <ScrollView
+          ref={count}
+          contentContainerStyle={{height: '250%'}}
+          onScroll={e => {
+            setOffSetState(e.nativeEvent.contentOffset.y);
           }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.js</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+          <View style={{backgroundColor: 'red', width: '100%', height: 380}} />
+          <View
+            style={{
+              backgroundColor: 'yellow',
+              width: '100%',
+              height: 350,
+              marginTop: 50,
+            }}
+          />
+          <View
+            style={{
+              backgroundColor: 'blue',
+              width: '100%',
+              height: 350,
+              marginTop: 50,
+            }}
+          />
+          <View
+            style={{
+              backgroundColor: 'orange',
+              width: '100%',
+              height: 350,
+              marginTop: 50,
+            }}
+          />
+        </ScrollView>
+      </View>
+    </View>
   );
 };
-
-const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-});
 
 export default App;
